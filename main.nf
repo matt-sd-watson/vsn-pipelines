@@ -16,6 +16,16 @@ include {
     getDataChannel;
 } from './src/channels/channels' params(params)
 
+
+include {
+        single_sample as SINGLE_SAMPLE;
+    } from './workflows/single_sample' params(params)
+    include {
+        PUBLISH as PUBLISH_SINGLE_SAMPLE_SCOPE;
+        PUBLISH as PUBLISH_SINGLE_SAMPLE_SCANPY;
+    } from "./src/utils/workflows/utils" params(params)
+
+
 // run multi-sample with bbknn, output a scope loom file
 workflow bbknn {
 
@@ -233,14 +243,6 @@ workflow harmony_scenic {
 
 // run single_sample, output a scope loom file
 workflow single_sample {
-
-    include {
-        single_sample as SINGLE_SAMPLE;
-    } from './workflows/single_sample' params(params)
-    include {
-        PUBLISH as PUBLISH_SINGLE_SAMPLE_SCOPE;
-        PUBLISH as PUBLISH_SINGLE_SAMPLE_SCANPY;
-    } from "./src/utils/workflows/utils" params(params)
 
     getDataChannel | SINGLE_SAMPLE
 
